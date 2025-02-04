@@ -2,7 +2,7 @@
 ########################## Data Manipulation & Prep ############################
 ################################################################################
 
-# Last update - Josh: 01/31/2025
+# Last update - Josh: 02/04/2025
 
 # Libraries
 source("scripts/libraries.R")
@@ -23,9 +23,13 @@ plots_spatial <- plots %>%
   subset(Plot %in% c("MRS1", "BW2", "BW3", "MRS4", "MRS5", "BL6",
                      "MRS7")) %>% 
   select(c("Plot", "Tree",         # Descriptors
+           "Spec",
            "dbh1", "dbh3", "dbh4", # Diameter
            "hc1", "hc3", "hc4",    # Height
            "dead", "deadPeriod"))  # Mortality
+
+# combine upper and lower plots
+plots_spatial <- rbind.data.frame(plots_spatial, plots_upper)
 
 # Load shapefiles (shp_list)
 load("data/shapefiles_raw/shapefiles_list.RData")
@@ -144,7 +148,7 @@ mrs7 <- mrs7_shp %>%
 mrs7; plot(st_geometry(mrs7))
 
 ### MRS 11 ######################################################################
-mrs11_growth <- plots_upper %>% 
+mrs11_growth <- plots_spatial %>% 
   subset(Plot == "MRS11")
 mrs11_growth$Tree <- as.numeric(mrs11_growth$Tree)
 
@@ -158,7 +162,7 @@ mrs11 <- mrs11_shp %>%
 mrs11; plot(st_geometry(mrs11))
 
 ### MRS 12 ######################################################################
-mrs12_growth <- plots_upper %>% 
+mrs12_growth <- plots_spatial %>% 
   subset(Plot == "MRS12")
 mrs12_growth$Tree <- as.numeric(mrs12_growth$Tree)
 
@@ -172,7 +176,7 @@ mrs12 <- mrs12_shp %>%
 mrs12; plot(st_geometry(mrs12))
 
 ### MRS 13 ######################################################################
-mrs13_growth <- plots_upper %>% 
+mrs13_growth <- plots_spatial %>% 
   subset(Plot == "MRS13")
 mrs13_growth$Tree <- as.numeric(mrs13_growth$Tree)
 
@@ -187,11 +191,15 @@ mrs13; plot(st_geometry(mrs13))
 
 ################################################################################
 # Save
-data_growth_three_census <- rbind(mrs1, bw2, bw3, mrs4, mrs5, bl6, mrs7)
-data_growth_two_census <- rbind(mrs11, mrs12, mrs13)  
+data_growth <- rbind(mrs1, bw2, bw3, mrs4, mrs5, bl6, mrs7, mrs11,
+                                  mrs12, mrs13) %>% 
+  mutate(dbh4 = as.numeric(dbh4)) %>% 
+  mutate(hc4 = as.integer(hc4)) %>% 
+  mutate(dead = as.numeric(dead))
 
-save(data_growth_three_census, file = "data/growth_initial_prep/three_census_growth.RData")
-save(data_growth_two_census, file = "data/growth_initial_prep/two_census_growth.RData")
+
+save(data_growth, file = "data/growth_initial_prep/data_growth.RData")
+
   
   
   
