@@ -16,3 +16,29 @@ process_shapefile <- function(shp_list, index) {
     # Convert to sf object with CRS 26913
     st_as_sf(coords = c("X", "Y"), crs = 26913)
 }
+
+process_shapefile_alt <- function(shp_list, index) {
+  shp_list[[index]] %>%
+    # Extract coordinates
+    mutate(
+      X = st_coordinates(geometry)[, 1],  # X coordinate
+      Y = st_coordinates(geometry)[, 2]   # Y coordinate
+    ) %>%
+    # Bind TreeNum and coordinates together
+    select(X, Y, TreeNumber) %>%
+    # Convert to sf object with CRS 26913
+    st_as_sf(coords = c("X", "Y"), crs = 26913)
+}
+
+process_shapefile_id <- function(shp_list, index) {
+  shp_list[[index]] %>%
+    # Extract coordinates
+    mutate(
+      X = st_coordinates(geometry)[, 1],  # X coordinate
+      Y = st_coordinates(geometry)[, 2]   # Y coordinate
+    ) %>%
+    # Bind TreeNum and coordinates together
+    select(X, Y, Id) %>%
+    # Convert to sf object with CRS 26913
+    st_as_sf(coords = c("X", "Y"), crs = 26913)
+}
