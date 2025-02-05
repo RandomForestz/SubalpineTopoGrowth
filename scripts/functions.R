@@ -118,3 +118,16 @@ compute_comp_ci_two_census <- function(data, plot_name = "MRS1", size_threshold 
     mutate(ci_2 = census2$Hegyi_CI) %>%
     mutate(ci_3 = census3$Hegyi_CI)
 }
+
+################################################################################
+# Edge buffer for competition edge effects
+################################################################################
+
+edge_buffer <- function(shp, dist_m) {
+  convex <- process_shapefile(shp) %>%  
+    st_union() %>% 
+    st_convex_hull()
+  
+  buff <- st_buffer(convex, dist = dist_m)
+  return(buff)
+}
