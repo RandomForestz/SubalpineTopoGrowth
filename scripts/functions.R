@@ -95,29 +95,18 @@ compute_census_ci <- function(data, plot_name, dbh_column, size_threshold = 10) 
 }
 
 # Function to create the competition index for multiple censuses
-compute_comp_ci <- function(data, plot_name = "MRS1", size_threshold = 10) {
+compute_comp_ci <- function(data, plot_name = plot, size_threshold = 6) {
   census1 <- compute_census_ci(data, plot_name, "dbh1", size_threshold)
   census2 <- compute_census_ci(data, plot_name, "dbh3", size_threshold)
   census3 <- compute_census_ci(data, plot_name, "dbh4", size_threshold)
   
-  data_growth_three_census %>%
+  data_growth %>%
     subset(Plot == plot_name) %>%
     mutate(ci_1 = census1$Hegyi_CI) %>%
     mutate(ci_2 = census2$Hegyi_CI) %>%
     mutate(ci_3 = census3$Hegyi_CI)
 }
 
-# Two census
-# Function to create the competition index for multiple censuses
-compute_comp_ci_two_census <- function(data, plot_name = "MRS1", size_threshold = 10) {
-  census2 <- compute_census_ci(data, plot_name, "dbh3", size_threshold)
-  census3 <- compute_census_ci(data, plot_name, "dbh4", size_threshold)
-  
-  data_growth_three_census %>%
-    subset(Plot == plot_name) %>%
-    mutate(ci_2 = census2$Hegyi_CI) %>%
-    mutate(ci_3 = census3$Hegyi_CI)
-}
 
 ################################################################################
 # Edge buffer for competition edge effects
