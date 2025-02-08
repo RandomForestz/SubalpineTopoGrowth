@@ -120,3 +120,5 @@ edge_buffer <- function(shp, dist_m) {
   buff <- st_buffer(convex, dist = dist_m)
   return(buff)
 }
+
+
