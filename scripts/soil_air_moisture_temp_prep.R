@@ -43,27 +43,32 @@ humidity <- air_temp %>%
 ################################################################################
 
 sm <- ggplot(data = soil_moisture) +
-  geom_col(mapping = aes(x = as.factor(local_site), y = mean_sm, fill = local_site)) +
+  geom_col(mapping = aes(x = reorder(as.factor(local_site), mean_sm), y = mean_sm, fill = local_site)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Mean Soil Moisture by Plot", x = "Plot", y = "value", fill = "")
 
 st <- ggplot(data = soil_temperature) +
-  geom_col(mapping = aes(x = as.factor(localSite), y = mean_temp, fill = localSite)) +
+  geom_col(mapping = aes(x = reorder(as.factor(localSite), mean_temp), y = mean_temp, fill = localSite)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Mean Soil Temperature by Plot", x = "Plot", y = "C", fill = "")
 
 at <- ggplot(data = air_temperature) +
-  geom_col(mapping = aes(x = as.factor(local_site), y = mean_temp, fill = local_site)) +
+  geom_col(mapping = aes(x = reorder(as.factor(local_site), mean_temp), y = mean_temp, fill = local_site)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Mean Air Temperature by Plot", x = "Plot", y = "C", fill = "")
 
 rh <- ggplot(data = humidity) +
-  geom_col(mapping = aes(x = as.factor(local_site), y = mean_rh, fill = local_site)) +
+  geom_col(mapping = aes(x = reorder(as.factor(local_site), mean_rh), y = mean_rh, fill = local_site)) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Mean Relative Humidity by Plot", x = "Plot", y = "Humidity", fill = "")
 
 ggarrange(sm, st, at, rh)
+
+soil_moisture
+soil_temperature
+air_temperature
+humidity
