@@ -9,7 +9,7 @@ source("scripts/libraries.R")
 # functions
 source("scripts/functions.R")
 
-# Data prepped with compeititon indexes
+# Data prepped with competition indexes
 load("data/comp/growth_comp.RData")
 
 ################################################################################
@@ -21,7 +21,7 @@ subalpine$id <- paste0(subalpine$Plot, "_", subalpine$Tree) # create ID column
 ### MRS 1 ######################################################################
 mrs1 <- subalpine %>%
   subset(Plot == "MRS1") %>% 
-  mutate("elev" = 2900) %>% 
+  mutate("elevation" = 2900) %>% 
   mutate("slope" = 5) %>% 
   mutate("aspect" = 90) %>% 
   mutate(hc1 = case_when(                
@@ -58,7 +58,7 @@ mrs1 <- subalpine %>%
 mrs1_comp <- mrs1 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs1_basal <- mrs1 %>% 
@@ -83,7 +83,7 @@ mrs1_long <- mrs1_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -93,7 +93,7 @@ mrs1_long <- mrs1_comp %>%
 ### BW2 ########################################################################
 bw2 <- subalpine %>%
   subset(Plot == "BW2") %>% 
-  mutate("elev" = 2980) %>% 
+  mutate("elevation" = 2980) %>% 
   mutate("slope" = 5) %>% 
   mutate("aspect" = 90) %>% 
   mutate(hc1 = case_when(                
@@ -130,7 +130,7 @@ bw2 <- subalpine %>%
 bw2_comp <- bw2 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 bw2_basal <- bw2 %>% 
@@ -155,7 +155,7 @@ bw2_long <- bw2_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -164,7 +164,7 @@ bw2_long <- bw2_comp %>%
 ### BW3 ########################################################################
 bw3 <- subalpine %>%
   subset(Plot == "BW3") %>% 
-  mutate("elev" = 2980) %>% 
+  mutate("elevation" = 2980) %>% 
   mutate("slope" = 5) %>% 
   mutate("aspect" = 90) %>% 
   mutate(hc1 = case_when(                
@@ -201,7 +201,7 @@ bw3 <- subalpine %>%
 bw3_comp <- bw3 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 bw3_basal <- bw3 %>% 
@@ -226,7 +226,7 @@ bw3_long <- bw3_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -235,7 +235,7 @@ bw3_long <- bw3_comp %>%
 ### MRS4 ########################################################################
 mrs4 <- subalpine %>%
   subset(Plot == "MRS4") %>% 
-  mutate("elev" = 3170) %>% 
+  mutate("elevation" = 3170) %>% 
   mutate("slope" = 10) %>% 
   mutate("aspect" = 90) %>% 
   mutate(hc1 = case_when(                
@@ -272,7 +272,7 @@ mrs4 <- subalpine %>%
 mrs4_comp <- mrs4 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs4_basal <- mrs4 %>% 
@@ -297,7 +297,7 @@ mrs4_long <- mrs4_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -306,7 +306,7 @@ mrs4_long <- mrs4_comp %>%
 ### MRS5 ########################################################################
 mrs5 <- subalpine %>%
   subset(Plot == "MRS5") %>% 
-  mutate("elev" = 3280) %>% 
+  mutate("elevation" = 3280) %>% 
   mutate("slope" = 5) %>% 
   mutate("aspect" = 90) %>% 
   mutate(hc1 = case_when(                
@@ -343,7 +343,7 @@ mrs5 <- subalpine %>%
 mrs5_comp <- mrs5 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs5_basal <- mrs5 %>% 
@@ -368,7 +368,7 @@ mrs5_long <- mrs5_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -377,7 +377,7 @@ mrs5_long <- mrs5_comp %>%
 ### MRS7 ########################################################################
 mrs7 <- subalpine %>%
   subset(Plot == "MRS7") %>% 
-  mutate("elev" = 3260) %>% 
+  mutate("elevation" = 3260) %>% 
   mutate("slope" = 15) %>% 
   mutate("aspect" = 180) %>% 
   mutate(hc1 = case_when(                
@@ -414,7 +414,7 @@ mrs7 <- subalpine %>%
 mrs7_comp <- mrs7 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs7_basal <- mrs7 %>% 
@@ -439,7 +439,7 @@ mrs7_long <- mrs7_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -448,7 +448,7 @@ mrs7_long <- mrs7_comp %>%
 ### MRS11 ########################################################################
 mrs11 <- subalpine %>%
   subset(Plot == "MRS11") %>% 
-  mutate("elev" = 3347) %>% 
+  mutate("elevation" = 3347) %>% 
   mutate("slope" = 5) %>% 
   mutate("aspect" = 160) %>% 
   mutate(hc1 = case_when(                
@@ -485,7 +485,7 @@ mrs11 <- subalpine %>%
 mrs11_comp <- mrs11 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs11_basal <- mrs11 %>% 
@@ -510,7 +510,7 @@ mrs11_long <- mrs11_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -520,7 +520,7 @@ mrs11_long <- mrs11_comp %>%
 ### MRS12 ########################################################################
 mrs12 <- subalpine %>%
   subset(Plot == "MRS12") %>% 
-  mutate("elev" = 3380) %>% 
+  mutate("elevation" = 3380) %>% 
   mutate("slope" = 8) %>% 
   mutate("aspect" = 200) %>% 
   mutate(hc1 = case_when(                
@@ -557,7 +557,7 @@ mrs12 <- subalpine %>%
 mrs12_comp <- mrs12 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs12_basal <- mrs12 %>% 
@@ -582,7 +582,7 @@ mrs12_long <- mrs12_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -592,7 +592,7 @@ mrs12_long <- mrs12_comp %>%
 ### MRS13 ########################################################################
 mrs13 <- subalpine %>%
   subset(Plot == "MRS13") %>% 
-  mutate("elev" = 3337) %>% 
+  mutate("elevation" = 3337) %>% 
   mutate("slope" = 10) %>% 
   mutate("aspect" = 225) %>% 
   mutate(hc1 = case_when(                
@@ -629,7 +629,7 @@ mrs13 <- subalpine %>%
 mrs13_comp <- mrs13 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "compeititon") %>% 
+               values_to = "competition") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs13_basal <- mrs13 %>% 
@@ -654,7 +654,7 @@ mrs13_long <- mrs13_comp %>%
     moisture_class = as.factor(moisture_class),
     dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    compeititon = as.numeric(compeititon),
+    competition = as.numeric(competition),
     basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
     height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
@@ -672,8 +672,9 @@ sub_grow_long <- rbind.data.frame(mrs1_long, bw2_long, bw3_long,
                                   mrs13_long)
 
 subalpine <- sub_grow_long %>% 
-  filter(Spec %in% c("PICO", "PIFL", "PIEN", "ABLA")) # remove any non-target trees
-
+  filter(Spec %in% c("PICO", "PIFL", "PIEN", "ABLA")) %>%  # remove any non-target trees
+  filter(height %in% c("Dominant", "Co-Dominant", "Suppressed"))
+  
 subalpine_non_spatial <- sf::st_drop_geometry(subalpine) # create non spatial dataset
 
 save(subalpine, file = "data/growth_long/subalpine.RData") # save
