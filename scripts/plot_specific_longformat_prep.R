@@ -671,4 +671,7 @@ sub_grow_long <- rbind.data.frame(mrs1_long, bw2_long, bw3_long,
                                   mrs7_long, mrs11_long, mrs12_long,
                                   mrs13_long)
 
-save(sub_grow_long, file = "data/growth_long/growth_long.RData")
+subalpine <- sub_grow_long %>% 
+  filter(Spec %in% c("PICO", "PIFL", "PIEN", "ABLA")) # remove any non-target trees
+
+save(subalpine, file = "data/growth_long/growth_long.RData")
