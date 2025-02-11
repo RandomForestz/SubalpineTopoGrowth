@@ -9,7 +9,7 @@ source("scripts/libraries.R")
 # functions
 source("scripts/functions.R")
 
-# Data prepped with competition indexes
+# Data prepped with compeititon indexes
 load("data/comp/growth_comp.RData")
 
 ################################################################################
@@ -47,10 +47,10 @@ mrs1 <- subalpine %>%
   mutate("air_temperature" = 4.30) %>% 
   mutate("relative_humidity" = 56.9) %>% 
   mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -58,22 +58,22 @@ mrs1 <- subalpine %>%
 mrs1_comp <- mrs1 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs1_basal <- mrs1 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs1_hc <- mrs1 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs1_long <- mrs1_comp %>% 
-  mutate(Basal_Area = mrs1_basal$Basal_Area) %>% 
-  mutate(Height = mrs1_hc$Height_Class) %>% 
+  mutate(basal_area = mrs1_basal$basal_area) %>% 
+  mutate(height = mrs1_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -81,12 +81,12 @@ mrs1_long <- mrs1_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 
@@ -119,10 +119,10 @@ bw2 <- subalpine %>%
   mutate("air_temperature" = 3.26) %>% 
   mutate("relative_humidity" = 39.2) %>% 
   mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -130,22 +130,22 @@ bw2 <- subalpine %>%
 bw2_comp <- bw2 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 bw2_basal <- bw2 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 bw2_hc <- bw2 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 bw2_long <- bw2_comp %>% 
-  mutate(Basal_Area = bw2_basal$Basal_Area) %>% 
-  mutate(Height = bw2_hc$Height_Class) %>% 
+  mutate(basal_area = bw2_basal$basal_area) %>% 
+  mutate(height = bw2_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -153,12 +153,12 @@ bw2_long <- bw2_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 ### BW3 ########################################################################
@@ -190,10 +190,10 @@ bw3 <- subalpine %>%
   mutate("air_temperature" = 2.96) %>% 
   mutate("relative_humidity" = 65.6) %>% 
   mutate("moisture_class" = "Mesic") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -201,22 +201,22 @@ bw3 <- subalpine %>%
 bw3_comp <- bw3 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 bw3_basal <- bw3 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 bw3_hc <- bw3 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 bw3_long <- bw3_comp %>% 
-  mutate(Basal_Area = bw3_basal$Basal_Area) %>% 
-  mutate(Height = bw3_hc$Height_Class) %>% 
+  mutate(basal_area = bw3_basal$basal_area) %>% 
+  mutate(height = bw3_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -224,12 +224,12 @@ bw3_long <- bw3_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 ### MRS4 ########################################################################
@@ -260,11 +260,11 @@ mrs4 <- subalpine %>%
   mutate("soil_temperature" = 2.85) %>% 
   mutate("air_temperature" = 2.30) %>% 
   mutate("relative_humidity" = 64.3) %>% 
-  mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("moisture_class" = "Mesic") %>% 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -272,22 +272,22 @@ mrs4 <- subalpine %>%
 mrs4_comp <- mrs4 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs4_basal <- mrs4 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs4_hc <- mrs4 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs4_long <- mrs4_comp %>% 
-  mutate(Basal_Area = mrs4_basal$Basal_Area) %>% 
-  mutate(Height = mrs4_hc$Height_Class) %>% 
+  mutate(basal_area = mrs4_basal$basal_area) %>% 
+  mutate(height = mrs4_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -295,12 +295,12 @@ mrs4_long <- mrs4_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 ### MRS5 ########################################################################
@@ -331,11 +331,11 @@ mrs5 <- subalpine %>%
   mutate("soil_temperature" = 2.19) %>% 
   mutate("air_temperature" = 0.56) %>% 
   mutate("relative_humidity" = 66.6) %>% 
-  mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("moisture_class" = "Hydric") %>% 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -343,22 +343,22 @@ mrs5 <- subalpine %>%
 mrs5_comp <- mrs5 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs5_basal <- mrs5 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs5_hc <- mrs5 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs5_long <- mrs5_comp %>% 
-  mutate(Basal_Area = mrs5_basal$Basal_Area) %>% 
-  mutate(Height = mrs5_hc$Height_Class) %>% 
+  mutate(basal_area = mrs5_basal$basal_area) %>% 
+  mutate(height = mrs5_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -366,12 +366,12 @@ mrs5_long <- mrs5_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 ### MRS7 ########################################################################
@@ -403,10 +403,10 @@ mrs7 <- subalpine %>%
   mutate("air_temperature" = 1.12) %>% 
   mutate("relative_humidity" = 64.6) %>% 
   mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -414,22 +414,22 @@ mrs7 <- subalpine %>%
 mrs7_comp <- mrs7 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs7_basal <- mrs7 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs7_hc <- mrs7 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs7_long <- mrs7_comp %>% 
-  mutate(Basal_Area = mrs7_basal$Basal_Area) %>% 
-  mutate(Height = mrs7_hc$Height_Class) %>% 
+  mutate(basal_area = mrs7_basal$basal_area) %>% 
+  mutate(height = mrs7_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -437,12 +437,12 @@ mrs7_long <- mrs7_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   )
 
 ### MRS11 ########################################################################
@@ -473,11 +473,11 @@ mrs11 <- subalpine %>%
   mutate("soil_temperature" = 2.61) %>% 
   mutate("air_temperature" = 0.47) %>% 
   mutate("relative_humidity" = 66.6) %>% 
-  mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("moisture_class" = "Mesic") %>% 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -485,22 +485,22 @@ mrs11 <- subalpine %>%
 mrs11_comp <- mrs11 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs11_basal <- mrs11 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs11_hc <- mrs11 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs11_long <- mrs11_comp %>% 
-  mutate(Basal_Area = mrs11_basal$Basal_Area) %>% 
-  mutate(Height = mrs11_hc$Height_Class) %>% 
+  mutate(basal_area = mrs11_basal$basal_area) %>% 
+  mutate(height = mrs11_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -508,12 +508,12 @@ mrs11_long <- mrs11_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   ) %>% 
   filter(Census != 1)
 
@@ -546,10 +546,10 @@ mrs12 <- subalpine %>%
   mutate("air_temperature" = 4.35) %>% 
   mutate("relative_humidity" = 66.4) %>% 
   mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -557,22 +557,22 @@ mrs12 <- subalpine %>%
 mrs12_comp <- mrs12 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs12_basal <- mrs12 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs12_hc <- mrs12 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs12_long <- mrs12_comp %>% 
-  mutate(Basal_Area = mrs12_basal$Basal_Area) %>% 
-  mutate(Height = mrs12_hc$Height_Class) %>% 
+  mutate(basal_area = mrs12_basal$basal_area) %>% 
+  mutate(height = mrs12_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -580,12 +580,12 @@ mrs12_long <- mrs12_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   ) %>% 
   filter(Census != 1)
 
@@ -618,10 +618,10 @@ mrs13 <- subalpine %>%
   mutate("air_temperature" = 1.02) %>% 
   mutate("relative_humidity" = 67.7) %>% 
   mutate("moisture_class" = "Xeric") %>% 
-  mutate("Basal_Area_1982" = ((dbh1^2) * 0.005454)) %>% 
-  mutate("Basal_Area_2016" = ((dbh3^2) * 0.005454)) %>%
-  mutate("Basal_Area_2022" = ((dbh4^2) * 0.005454)) %>% 
-  mutate(Dead_Census = ifelse(deadPeriod == 0, "Alive", 
+  mutate("basal_area_1982" = ((dbh1^2) * 0.005454)) %>% 
+  mutate("basal_area_2016" = ((dbh3^2) * 0.005454)) %>%
+  mutate("basal_area_2022" = ((dbh4^2) * 0.005454)) %>% 
+  mutate(dead_census = ifelse(deadPeriod == 0, "Alive", 
                               ifelse(deadPeriod %in% c(1,2,3,4,5,6,7,8,9), "After Census 1",
                                      ifelse(deadPeriod %in% c(10, 11, 12), "After Census 2", deadPeriod)))) %>% 
   .[c(18, 4:5, 19:29, 14:16, 9:12, 30, 1:2)]
@@ -629,22 +629,22 @@ mrs13 <- subalpine %>%
 mrs13_comp <- mrs13 %>% 
   pivot_longer(cols = starts_with("ci_"),
                names_to = "comp_census",
-               values_to = "Competition") %>% 
+               values_to = "compeititon") %>% 
   mutate(Census = rep(c("1", "2", "3"), length.out = n()))
 
 mrs13_basal <- mrs13 %>% 
-  pivot_longer(cols = starts_with("Basal_Area"),
+  pivot_longer(cols = starts_with("basal_area"),
                names_to = "ba_census",
-               values_to = "Basal_Area")
+               values_to = "basal_area")
 
 mrs13_hc <- mrs13 %>% 
   pivot_longer(cols = starts_with("hc"),
                names_to = "height",
-               values_to = "Height_Class") 
+               values_to = "height_class") 
 
 mrs13_long <- mrs13_comp %>% 
-  mutate(Basal_Area = mrs13_basal$Basal_Area) %>% 
-  mutate(Height = mrs13_hc$Height_Class) %>% 
+  mutate(basal_area = mrs13_basal$basal_area) %>% 
+  mutate(height = mrs13_hc$height_class) %>% 
   .[c(1:2, 25, 3:11, 18:19, 26, 24, 27, 20:21)] %>% 
   mutate(
     id = as.factor(id),  
@@ -652,12 +652,12 @@ mrs13_long <- mrs13_comp %>%
     Spec = as.factor(Spec),
     Census = as.factor(Census),
     moisture_class = as.factor(moisture_class),
-    Dead_Census = as.factor(Dead_Census),
+    dead_census = as.factor(dead_census),
     dead = as.numeric(dead),  # binary format
-    Competition = as.numeric(Competition),
-    Basal_Area = as.numeric(Basal_Area),
+    compeititon = as.numeric(compeititon),
+    basal_area = as.numeric(basal_area),
     aspect = as.numeric(aspect),  
-    Height = fct_relevel(as.factor(Height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
+    height = fct_relevel(as.factor(height), c("Suppressed", "Co-Dominant", "Dominant")) # Ordinal factor
   ) %>% 
   filter(Census != 1)
 
