@@ -32,7 +32,8 @@ packages <- c(
   "spocc",
   "siplab",
   "sp",
-  "mgcv")
+  "mgcv",
+  "lme4")
 
 # tack tidyverse on the end always to keep tidyverse functions as default for function conflicts
 packages <- c(packages, "tidyverse")

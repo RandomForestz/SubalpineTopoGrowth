@@ -674,7 +674,10 @@ sub_grow_long <- rbind.data.frame(mrs1_long, bw2_long, bw3_long,
 subalpine <- sub_grow_long %>% 
   filter(Spec %in% c("PICO", "PIFL", "PIEN", "ABLA")) # remove any non-target trees
 
-subalpine_non_spatial <- sf::st_drop_geometry(subalpine)
+subalpine_non_spatial <- sf::st_drop_geometry(subalpine) # create non spatial dataset
 
-save(subalpine, file = "data/growth_long/subalpine.RData")
-save(subalpine_non_spatial, file = "data/growth_long/subalpine_non_spatial.RData")
+save(subalpine, file = "data/growth_long/subalpine.RData") # save
+save(subalpine_non_spatial, file = "data/growth_long/subalpine_non_spatial.RData") # save
+
+
+
