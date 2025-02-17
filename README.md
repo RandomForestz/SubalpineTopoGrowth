@@ -30,24 +30,24 @@ This is the repository for the MRS Subalpine tree growth across topoclimatic gra
   - three_census_growth.RData: depricated.
   - two_census_growth.RData: depricated.
   
-growth_long:
+# growth_long:
   - subalpine_non_spatial.RData: Resulting long format dataset without geometry.
   - subalpine.RData: resulting long format dataset with geometry.
   
-growth_long
-  perm_plots_all.csv: Raw csv data from field data collection
-  plot_upper.csv: raw csv data from field data collection for MRS 11, 12, 13
+# growth_long
+  - perm_plots_all.csv: Raw csv data from field data collection
+  - plot_upper.csv: raw csv data from field data collection for MRS 11, 12, 13
   
-shapefiles_complete:
-  shapefiles for each plot with data in longformat. Under construction.
+# shapefiles_complete:
+  - shapefiles for each plot with data in longformat. Under construction.
   
-shapefiles_raw:
-  Stem maps and spatial data for each plot.
+# shapefiles_raw:
+  - Stem maps and spatial data for each plot.
 
-soils:
-  soilmoisture_biweekly_micromet.ra.data.csv: soil moisture
-  soilmoisture_continuous_micromet.ra.data.csv
-  soiltemp_micromet.ra.data.csv: temperature
+# soils:
+  - soilmoisture_biweekly_micromet.ra.data.csv: soil moisture
+  - soilmoisture_continuous_micromet.ra.data.csv
+  - soiltemp_micromet.ra.data.csv: temperature
   
 
 ### Long format growth data structure ##########################################
