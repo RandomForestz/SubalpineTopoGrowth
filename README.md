@@ -81,27 +81,49 @@ The dataset underwent several transformations:
 Variables:
 
 Column	(Type)	Description
+
 id	(Factor)	Unique identifier for each tree.
+
 Plot	(Factor)	Plot name; all entries are "MRS13".
+
 Spec	(Factor)	Tree species code.
+
 elevation	(Numeric)	Elevation of the plot (meters).
+
 slope	(Numeric)	Slope of the plot (degrees).
+
 aspect	(Numeric)	Aspect of the plot (degrees, 0 = North).
+
 soil_moisture	(Numeric)	Soil moisture percentage.
+
 soil_temperature	(Numeric)	Soil temperature in °C.
+
 air_temperature	(Numeric)	Air temperature in °C.
+
 relative_humidity	(Numeric)	Relative humidity percentage.
+
 moisture_class	(Factor)	Categorical description of moisture availability (e.g., "Xeric").
+
 basal_area_1982	(Numeric)	Basal area calculated from dbh1 (cm²).
+
 basal_area_2016	(Numeric)	Basal area calculated from dbh3 (cm²).
+
 basal_area_2022	(Numeric)	Basal area calculated from dbh4 (cm²).
+
 dead	(Numeric)	Binary indicator of tree mortality (1 = dead, 0 = alive).
+
 dead_census	(Factor)	Census period during which the tree died (or "Alive").
+
 competition	(Numeric)	Tree competition index (rounded).
+
 comp_census	(Factor)	Census period for competition data (ci_1, ci_2, ci_3).
+
 RGR	(Numeric)	Relative growth rate for basal area.
+
 rgr_census	(Factor)	Census period for RGR data (RGR_1, RGR_2, RGR_3).
+
 height	(Factor)	Ordinal height class: "Suppressed", "Co-Dominant", "Dominant".
+
 Census	(Factor)	Census year; only Census 3 is retained in the final dataset.
 
 
