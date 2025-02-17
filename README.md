@@ -19,20 +19,20 @@ This is the repository for the MRS Subalpine tree growth across topoclimatic gra
 
 
 ### Data Folder ################################################################
-air_temp: 
-  airtemp_rh_microm.ra.data.csv: CSV data of air temp and relative humidity per plot at NWT
+# air_temp: 
+  - airtemp_rh_microm.ra.data.csv: CSV data of air temp and relative humidity per plot at NWT
 
-comp:
-  growth_comp.RData: dataframe of mrs plots with competition indices for each tree. Needed for long format prep.
+# comp:
+  - growth_comp.RData: dataframe of mrs plots with competition indices for each tree. Needed for long format prep.
   
-growth_initial_prep:
-  data_growth.RData: Dataset created from initial plot prep
-  three_census_growth.RData: depricated.
-  two_census_growth.RData: depricated.
+# growth_initial_prep:
+  - data_growth.RData: Dataset created from initial plot prep
+  - three_census_growth.RData: depricated.
+  - two_census_growth.RData: depricated.
   
 growth_long:
-  subalpine_non_spatial.RData: Resulting long format dataset without geometry.
-  subalpine.RData: resulting long format dataset with geometry.
+  - subalpine_non_spatial.RData: Resulting long format dataset without geometry.
+  - subalpine.RData: resulting long format dataset with geometry.
   
 growth_long
   perm_plots_all.csv: Raw csv data from field data collection
