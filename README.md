@@ -2,6 +2,8 @@
 
 This is the repository for the MRS Subalpine tree growth across topoclimatic gradients chapter.
 
+---
+
 ### Scripts ####################################################################
 
 # The following scripts are called or are not needed to be completed in any particular order.
@@ -17,6 +19,7 @@ This is the repository for the MRS Subalpine tree growth across topoclimatic gra
 - S2_competition_index: For developing Hegyi's indices for each tree
 - S3_plot_specific_longformat_prep: For modifying and organizing data in longformat. Includes entering plot specific covariates.
 
+---
 
 ### Data Folder ################################################################
 # air_temp: 
@@ -48,7 +51,8 @@ This is the repository for the MRS Subalpine tree growth across topoclimatic gra
   - soilmoisture_biweekly_micromet.ra.data.csv: soil moisture
   - soilmoisture_continuous_micromet.ra.data.csv
   - soiltemp_micromet.ra.data.csv: temperature
-  
+
+---
 
 ### Long format growth data structure ##########################################
 
