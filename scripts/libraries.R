@@ -33,7 +33,8 @@ packages <- c(
   "siplab",
   "sp",
   "mgcv",
-  "lme4")
+  "lme4",
+  "ggResidpanel")
 
 # tack tidyverse on the end always to keep tidyverse functions as default for function conflicts
 packages <- c(packages, "tidyverse")
