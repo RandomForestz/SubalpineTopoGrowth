@@ -1,0 +1,214 @@
+---
+title: "Growth Exploration & Initial Models"
+author: "Josh Carrell - Ph.D. Student | Forest Sciences - Colorado State University"
+date: "Last Update: `r format(Sys.time(), '%B %d, %Y')`"
+output:
+  html_document:
+    toc: yes
+    toc_float:
+      toc_collapsed: yes
+    toc_depth: 4
+    number_sections: no
+    theme:
+      bootswatch: yeti
+    code_folding: hide
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+---
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lme4)
+
+# Data prepped for competition indexes
+load("D:/Projects/SubalpineTopoGrowth/data/growth_long/subalpine_non_spatial.RData")
+df <- subalpine_non_spatial
+df <- na.omit(df)
+names(df)
+```
+
+
+## Question & Hypotheses
+
+1.How does soil moisture availability and competition influence subalpine tree growth?
+
+
+Hypothesis 1: Tree growth will be greater in wetter sites particularly for species that are less tolerant of drought.
+
+
+Hypothesis 2: Tree growth will be limited by not only soil moisture but an interaction with competition, with trees growth being suppressed in areas of low soil moisture availability and high competition.
+
+
+----
+
+## Base Regression Model
+
+To test if tree growth is positively related to soil moisture only.
+
+### Equation
+
+$$
+BAI = \beta + \beta_1 * SM + \varepsilon
+$$
+
+### Plots
+
+```{r, warning=FALSE, message=FALSE}
+# RGR ~ Soil Moisture / Species
+ggplot(df, aes(x = soil_moisture, y = log(rgr_basal_area))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  theme_bw() +
+  labs(title = "RGR Basal Area vs. Soil Moisture",
+       x = "Soil Moisture",
+       y = "RGR Basal Area")
+```
+
+### Model
+
+```{r}
+base_model <- lm(rgr_basal_area ~ soil_moisture, data = df)
+summary(base_model)
+```
+
+### Takeaways
+
+Results:
+
+1. Soil moisture is significant, suggesting it influences tree growth.
+
+2. Effect size is small. 3.555e-04, meaning smaller growth per unit of soil moisture increase.
+
+Low Rsquared of 1.2, meaning other factors must contribute to the relationship.
+
+
+
+----
+
+
+## Soil Moisture * Competition interaction
+
+To test if there is an interaction among competition and soil moisture. Hypothesis 2.
+
+### Equation
+
+$$
+BAI = \beta + \beta_1 * SM + \beta_2 * Competition + \varepsilon
+$$
+
+### Plots
+
+```{r, warning=FALSE, message=FALSE}
+# RGR ~ Competition / soil moisture
+ggplot(df, aes(x = competition, y = log(rgr_basal_area))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  facet_grid(~soil_moisture) +
+  xlim(c(0,50)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(title = "RGR Basal Area vs. Competition by Soil Moisture",
+       x = "Competition",
+       y = "RGR Basal Area") 
+```
+
+```{r, warning=FALSE, message=FALSE}
+# RGR ~ Competition / soil moisture
+ggplot(df, aes(x = competition, y = log(rgr_basal_area))) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  facet_grid(~moisture_class) +
+  xlim(c(0,60)) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  labs(title = "RGR Basal Area vs. Competition by Soil Moisture Class",
+       x = "Competition",
+       y = "RGR Basal Area") 
+```
+
+### Model
+
+```{r}
+interaction_model <- lm(rgr_basal_area ~ soil_moisture * competition, 
+                        data = df)
+
+summary(interaction_model)
+```
+
+
+### Takeaways
+
+1. Soil moisture influences soil moisture positively (significant).
+
+2. Competition negatively influences growth (significant)
+
+3. Interaction between soil moisture and competition is negative, meaning compettion suppresses growth in drier conditions.
+
+4. Rsquared is still small, ~3.6%
+
+
+----
+
+## Mixed-effects model (Random Intercept: Species)
+
+To test whether the interactions differ by species
+
+### Equation
+
+$$
+BAI = \beta_0 + \beta_1 * SM + \beta_2 * Competition + \beta_3 * (SM * Competition) + (1|Species) + \epsilon
+$$
+
+### Model
+
+```{r}
+
+mixed_model <- lmer(rgr_basal_area ~ soil_moisture * competition + (1 | Spec), data = df)
+summary(mixed_model)
+
+
+
+```
+
+### Takeaways
+
+1. Growth increases with soil moisture
+
+2. Weakly positive effect
+
+3. Interaction: negative interaction, competition suppresses growth in drier sites
+
+4. Different species have different growth baselines but it's small
+
+
+
+----
+
+## Soil Moisture by Species
+
+Random intercept on species: Each species can have different baseline growth, allowing for species level variation in growth.
+
+Random slope on soil moisture within species: Soil moisture influence on growth can vary across species.
+
+Trying to capture species-specific varations in growth acorss moisture.
+
+```{r}
+newmodel <- lmer(rgr_basal_area ~ soil_moisture * competition + elevation + soil_temperature + height + Spec + soil_moisture + (1 | Spec) + (0 + soil_moisture | Spec), data = df)
+summary(newmodel)
+
+
+```
+
+## Takeaways
+
+1. Competition has a strong negative effect on growth (estimate: -2.352e-04, t value:  -9.384)
+
+2. Competition effects are amplified in wetter sites (estimate = -3.345e-05, t = -12.410)
+
+3. Soil moisture has small positive but significant effect on growth (Estimate = 2.507e-03, t = 1.902)
+
+4. Elevation plays no role here, but rather facilitates other covariates. A correlation among predictors would be useful here.
+
+5. Soil temperature is positively correlated with growth, potentially meaning longer growing season? estimate = 1.995e-02, t = 21.132.
+
+

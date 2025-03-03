@@ -16,6 +16,20 @@ df <- na.omit(df)
 names(df)
 
 ################################################################################
+# Question & Hypotheses
+################################################################################
+
+# 1.	How does soil moisture availability and competition influence subalpine 
+#     tree growth?
+
+# Hypothesis 1: Tree growth will be greater in wetter sites particularly 
+#               for species that are less tolerant of drought.
+# Hypothesis 2: Tree growth will be limited by not only soil moisture but an 
+#               interaction with competition, with trees growth being suppressed 
+#               in areas of low soil moisture availability and high competition.
+
+
+################################################################################
 ### Data Exploration - Basal Area ~ Competition
 ################################################################################
 
@@ -79,9 +93,4 @@ ggplot(df, aes(x = competition, y = log(rgr_basal_area), col = Spec)) +
 
 
 ################################################################################
-
-
-
-
-
 
