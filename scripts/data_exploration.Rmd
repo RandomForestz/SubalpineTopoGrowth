@@ -3,6 +3,9 @@ title: "Growth Exploration & Initial Models"
 author: "Josh Carrell - Ph.D. Student | Forest Sciences - Colorado State University"
 date: "Last Update: `r format(Sys.time(), '%B %d, %Y')`"
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
   html_document:
     toc: yes
     toc_float:
@@ -12,9 +15,6 @@ output:
     theme:
       bootswatch: yeti
     code_folding: hide
-  pdf_document:
-    toc: yes
-    toc_depth: '4'
 ---
 ```{r, message=FALSE, warning=FALSE}
 library(tidyverse)
