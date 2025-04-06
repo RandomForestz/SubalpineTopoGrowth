@@ -81,6 +81,49 @@ compute_hegyi_ci <- function(data, size_threshold = 10) {
 }
 
 
+# NEW Simplified
+
+hegyi <- function(data, dbh_col = "dbh1", radius = 6) {
+  # Pull coordinates and dbh
+  coords <- sf::st_coordinates(data)
+  dbh <- data[[dbh_col]]
+  
+  # Compute distance matrix
+  dist_matrix <- spDists(coords, longlat = FALSE)
+  hegyi <- numeric(nrow(data))
+  
+  # Loop over each tree
+  for (i in seq_len(nrow(data))) {
+    focal_dbh <- dbh[i]
+    neighbors <- which(dist_matrix[i, ] > 0 & dist_matrix[i, ] <= radius)
+    
+    hegyi[i] <- sum((dbh[neighbors] / focal_dbh) / dist_matrix[i, neighbors], na.rm = TRUE)
+  }
+  
+  # Add to sf object
+  data[[paste0("Hegyi_", dbh_col)]] <- hegyi
+  return(data)
+}
+
+################################################################################
+# Counting Dead Neighbors
+################################################################################
+
+
+count_dead <- function(data, dead_col){
+  is_dead <- data[[dead_col]] != "Alive"
+  buffer <- st_buffer(data, dist = 6)
+  neighbors_list <- st_intersects(buffer, data)
+  
+  dead_counts <- mapply(function(i, neighbors) {
+    neighbors <- setdiff(neighbors, i)  # exclude self
+    sum(is_dead[neighbors])
+  }, i = seq_len(nrow(data)), neighbors = neighbors_list)
+  
+  data$dead_neighbors_6m <- dead_counts
+  return(data)
+}
+
 ################################################################################
 # Prepare dataset with comp
 ################################################################################

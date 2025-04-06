@@ -13,20 +13,72 @@ source("scripts/functions.R")
 load("data/growth_initial_prep/data_growth.RData")
 
 ################################################################################
-# Compute Hegyi's Index using siplab
+# Compute Hegyi's Index 
 ################################################################################
 
-# Three Census Periods
-mrs1_comp <- compute_comp_ci(data_growth, plot_name = "MRS1", size_threshold = 10)
-bw2_comp <- compute_comp_ci(data_growth, plot_name = "BW2", size_threshold = 10)
-bw3_comp <- compute_comp_ci(data_growth, plot_name = "BW3", size_threshold = 10)
-mrs4_comp <- compute_comp_ci(data_growth, plot_name = "MRS4", size_threshold = 10)
-mrs5_comp <- compute_comp_ci(data_growth, plot_name = "MRS5", size_threshold = 10)
-bl6_comp <- compute_comp_ci(data_growth, plot_name = "BL6", size_threshold = 10)
-mrs7_comp <- compute_comp_ci(data_growth, plot_name = "MRS7", size_threshold = 10)
-mrs11_comp <- compute_comp_ci(data_growth, plot_name = "MRS11", size_threshold = 10)
-mrs12_comp <- compute_comp_ci(data_growth, plot_name = "MRS12", size_threshold = 10)
-mrs13_comp <- compute_comp_ci(data_growth, plot_name = "MRS13", size_threshold = 10)
+# MRS1
+mrs1_comp <- data_growth %>% 
+  filter(Plot == "MRS1") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# BW2
+bw2_comp <- data_growth %>% 
+  filter(Plot == "BW2") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# BW3
+bw3_comp <- data_growth %>% 
+  filter(Plot == "BW3") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS4
+mrs4_comp <- data_growth %>% 
+  filter(Plot == "MRS4") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS5
+mrs5_comp <- data_growth %>% 
+  filter(Plot == "MRS5") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS7
+mrs7_comp <- data_growth %>% 
+  filter(Plot == "MRS7") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS11
+mrs11_comp <- data_growth %>% 
+  filter(Plot == "MRS11") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS12
+mrs12_comp <- data_growth %>% 
+  filter(Plot == "MRS12") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
+# MRS13
+mrs13_comp <- data_growth %>% 
+  filter(Plot == "MRS13") %>% 
+  mutate(hegyi(., dbh_col = "dbh1")) %>% 
+  mutate(hegyi(., dbh_col = "dbh3")) %>% 
+  mutate(hegyi(., dbh_col = "dbh4"))
+
 
 # Combine
 growth_comp <- rbind(mrs1_comp,
@@ -34,11 +86,11 @@ growth_comp <- rbind(mrs1_comp,
                      bw3_comp,
                      mrs4_comp, 
                      mrs5_comp,
-                     bl6_comp,
                      mrs7_comp,
                      mrs11_comp,
                      mrs12_comp,
                      mrs13_comp)
+
 
 # save
 save(growth_comp, file = "data/comp/growth_comp.RData")

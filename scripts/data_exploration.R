@@ -12,7 +12,7 @@ source("scripts/functions.R")
 # Data prepped for competition indexes
 load("data/growth_long/subalpine_non_spatial.RData")
 df <- subalpine_non_spatial
-df <- na.omit(df)
+df <- df[df$annual_ba_cm_2022 > 0, ]
 names(df)
 
 ################################################################################
@@ -34,63 +34,71 @@ names(df)
 ################################################################################
 
 # RGR ~ soil Moisture by Species
-ggplot(df, aes(x = as.factor(moisture_class), y = log(rgr_basal_area), fill = Spec)) +
+ggplot(df, aes(x = as.factor(moisture_class), y = annual_ba_cm_2022, fill = Spec)) +
   geom_boxplot() +
   facet_wrap(~ Spec) +
   theme_minimal() +
-  labs(title = "RGR Basal Area by Moisture Class and Species",
+  labs(title = "Basal Area Increase ~ Moisture Class and Species",
        x = "Moisture Class",
-       y = "RGR Basal Area")
+       y = "Basal Area Increase") +
+  ylim(c(0,100))
 
 # RGR ~ Height / Species
-ggplot(df, aes(x = height, y = log(rgr_basal_area), fill = Spec)) +
+ggplot(df, aes(x = as.factor(soil_moisture), y = annual_ba_cm_2022, fill = Spec)) +
   geom_boxplot() +
   geom_smooth(method = "lm", se = TRUE) +
   theme_minimal() +
-  labs(title = "RGR Basal Area vs. Height",
-       x = "Height",
-       y = "RGR Basal Area")
-
-# RGR ~ Soil Moisture / Species
-ggplot(df, aes(x = soil_moisture, y = log(rgr_basal_area), col = Spec)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = TRUE, color = "black") +
-  facet_wrap(~ Spec) +
-  theme_minimal() +
-  labs(title = "RGR Basal Area vs. Air Temperature by Species",
+  labs(title = "Basal Area ~ Soil Moisture",
        x = "Soil Moisture",
-       y = "RGR Basal Area")
+       y = "Basal Area Increase") +
+  ylim(c(0,100))
 
-# RGR ~ Air Temperature / Species
-ggplot(df, aes(x = air_temperature, y = log(rgr_basal_area), col = Spec)) +
+
+
+# growth ~ Competition / Species
+ggplot(df, aes(x = ci_3, y = annual_ba_cm_2022, col = Spec)) +
   geom_point(alpha = 0.5) +
   geom_smooth(method = "lm", se = TRUE, color = "black") +
   facet_wrap(~ Spec) +
   theme_minimal() +
-  labs(title = "RGR Basal Area vs. Air Temperature by Species",
-       x = "Air Temperature",
-       y = "RGR Basal Area")
-
-# RGR ~ Soil temperature / Species
-ggplot(df, aes(x = soil_temperature, y = log(rgr_basal_area), col = Spec)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = TRUE, color = "black") +
-  facet_wrap(~ Spec) +
-  theme_minimal() +
-  labs(title = "RGR Basal Area vs. Soil Temperature by Species",
-       x = "Soil Temperature",
-       y = "RGR Basal Area")
-
-# RGR ~ Competition / Species
-ggplot(df, aes(x = competition, y = log(rgr_basal_area), col = Spec)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = TRUE, color = "black") +
-  facet_wrap(~ Spec) +
-  theme_minimal() +
-  labs(title = "RGR Basal Area vs. Competition by Species",
+  labs(title = "Basal Area Increase vs. Competition by Species",
        x = "Competition",
-       y = "RGR Basal Area")
+       y = "RGR Basal Area") +
+  ylim(c(0,100)) +
+  xlim(c(0,100))
 
+df <- df %>% 
+  filter(dead == 0)
+
+# growth by dead neighbors
+ggplot(df) +
+  geom_point(mapping = aes(x = dead_neighbors_6m, y = annual_ba_cm_2022, col = Spec), alpha = .1) +
+  geom_smooth(mapping = aes(x = dead_neighbors_6m, y = annual_ba_cm_2022, col = Spec), se = F, method = "lm") +
+  facet_wrap(~Plot)+
+  ylim(c(0,50)) +
+  xlim(c(0,30))
 
 ################################################################################
+
+z_scores <- scale(df$ci_3)
+filtered_data <- df[abs(z_scores) < 3, ]
+
+
+simp_lm <- lm(annual_ba_cm_2022 ~ ci_3 + Spec + dbh4 + soil_moisture, data = filtered_data)
+summary(simp_lm)
+
+
+simp_lmer <- lmer(annual_ba_cm_2022 ~ ci_3 + dbh4 + Spec * soil_moisture + (1|Plot), data = filtered_data)
+summary(simp_lmer)
+
+spec_lmer <- lmer(annual_ba_cm_2022 ~ ci_3 + dbh4 + soil_moisture + (1|Spec), data = filtered_data)
+summary(spec_lmer)
+
+
+ranef(simp_lmer)
+lattice::dotplot(ranef(simp_lmer, condVar = TRUE))
+ranef(spec_lmer)
+lattice::dotplot(ranef(spec_lmer, condVar = TRUE))
+
+
 
